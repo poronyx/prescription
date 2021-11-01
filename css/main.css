@@ -1,0 +1,242 @@
+
+nav{
+    background-color: rgb(51, 102, 153);
+    color: white;
+    padding: 30px 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+nav li{
+    list-style: none;
+}
+
+nav li a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 8px;
+    font-size: 20px;
+}
+
+nav li a:hover{
+    color: rgb(26, 15, 85);
+    text-decoration: none;
+}
+
+.td__box{
+    border: none !important;
+    border-color: transparent !important;
+}
+.container {
+    display: flex;
+    width: 95%;
+    height: auto;
+    margin: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+    background: #ffffff;
+}
+.container__patient_details{
+    padding: 2rem;
+    width: 40%;
+}
+
+.container__patient_prescription{
+    padding: 2rem;
+    width: 60%;
+    align-items: right;
+}
+.container__add_prescription{
+    padding: 1.5rem;
+    width: 90%;
+}
+.search__input{
+    width: 30%;
+    height: 50px;
+    font-size: 20px;
+    justify-content: space-between;
+    
+}
+.medicine__input{
+    width: 65%;
+    height: 30px;
+    font-size: 1rem;
+    padding:0.2rem;
+    justify-content: space-between;
+    
+}
+.medicineText{
+    width:20%
+}
+
+.search__prescription{
+    width: 70%;
+    height: 50px;
+    font-size: 20px;
+    justify-content: space-between;
+    
+}
+
+.search__button{
+    width: 10%;
+    min-width: 8rem;
+    padding: 1rem 2rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color:floralwhite;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    background:  rgb(51, 102, 153);
+}
+
+.add__button--prescription{
+    width: 25%;
+    min-width: 8rem;
+    padding: 1rem 1rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color:floralwhite;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    background:  rgb(51, 102, 153);
+}
+.add__button--medicine{
+    width: 15%;
+    min-width: 9rem;
+    padding: 1rem 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color:floralwhite;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    background:  rgb(51, 102, 153);
+}
+.search__button:hover ,.add__button--prescription:hover,.add__button--medicine:hover{
+    background: rgb(26, 15, 85);
+}
+.search__button:active, .add__button--prescription:active, .add__button--medicine:active, .medicine__button{
+    transform: scale(0.98);
+}
+table{
+    border-collapse: collapse;
+    width: 100%;
+    color: black;
+    font-family: monospace;
+    font-size: 20px;
+    text-align: Left;
+}
+th{
+    background-color: black;
+    color: white;
+}
+.container,
+.form__title {
+    font: 500 1rem 'Quicksand', sans-serif;
+}
+
+:root {
+    --modal-duration: 0.5s;
+    --modal-color: rgb(32, 64, 96);
+  }
+  
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    margin: 10% auto;
+    width: 60%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+    animation-name: modalopen;
+    animation-duration: var(--modal-duration);
+  }
+  
+  .modal-header h2,
+  .modal-footer h3 {
+    margin: 0;
+  }
+  
+  .modal-header {
+    background: var(--modal-color);
+    padding: 15px;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+  .modal-body {
+    padding: 10px 20px;
+    background: #fff;
+    display: flex;
+  }
+  .box1{
+    width: 30%;
+  }
+  .box2{
+    width: 69%;
+  }
+  .modal-footer {
+    background: var(--modal-color);
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .close {
+    color: #ccc;
+    float: right;
+    font-size: 30px;
+    color: #fff;
+  }
+  .input__text{
+    min-width: 9rem;
+    padding-top:0.3rem;
+    padding-bottom:0.3rem;
+    padding-right:0.3rem;
+    font-size: 1.1rem;
+    text-align: right;
+  }
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .medicine__button{
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  @keyframes modalopen {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
