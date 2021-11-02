@@ -23,7 +23,10 @@
       echo ("position " . $y . ":" . $dataArray[$x][$y] . "<br>");
     }
   }
-  echo(date("Y/m/d"));
+  $todayDate = date('Y-m-d');
+  $stringDate = strtotime($todayDate);
+
+  echo(gettype($stringDate));
   function generateTokenString(){
     $tokenLength = 25;
     $string = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFEHIJKLMNOPQRSTUVWXYZ";

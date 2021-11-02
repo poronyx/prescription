@@ -27,7 +27,9 @@
       $randString = $randString . date("Ymd");
       return $randString;
     }
-    $dataPresArray = array($_SESSION['user_id'],$_SESSION['patient_id'],date("Y/m/d"),generateTokenString(),"NOT COLLECTED");
+    $stringDate = "" . date("Y-m-d");
+    $createToken = generateTokenString();
+    $dataPresArray = array($_SESSION['user_id'],$_SESSION['patient_id'],date("Y-m-d"),generateTokenString(),"NOT COLLECTED");
     $dataMedArray = array();
 
     if (isset($_POST['drugNamePHP'])){
@@ -67,6 +69,18 @@
         unset($_POST['submitPHP']);
         exit('complete');
         
+      }
+
+      if(isset($_POST['drugSubmit'])){
+
+        $connection = new mysqli('localhost', 'root', '','testestdb');
+
+        if($connection->query("INSERT INTO prescription(prescription_id, doctor_id, patient_id, pr_date, token_string, collection_status)
+        VALUES (NULL,$dataPresArray[0],$dataPresArray[1],STR_TO_DATE('$stringDate','%Y-%m-%d'),'$createToken','NOT COLLECTED')") === TRUE){
+          exit('submitted');
+        }else{
+          exit('failed');
+        }
       }
 
       
@@ -310,6 +324,36 @@
                                 
                             }else{
                                 alert("Drug name doesn't exist!");
+                            }
+                        },
+                        dataType: 'text'
+                    }
+               );
+              }
+            });
+
+            $("#submitPresButton").on('click', function (){
+
+              //check if medicine not yet added
+              if(document.getElementById("td1").value == "" ){
+                alert('Please add at least 1 Medicine first!!');
+              }else{
+                $.ajax(
+                    {
+                        url: 'doctorAddPres.php',
+                        method: 'POST',
+                        data:{
+                            drugSubmit: 1
+                        },
+                        success: function(response){
+                            $("#response").html(response);
+
+                            if(response.indexOf('submitted') >= 0){
+                                
+                                alert("Prescription Successfully created");
+                                
+                            }else{
+                                alert("Failed!");
                             }
                         },
                         dataType: 'text'
