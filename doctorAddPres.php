@@ -19,6 +19,12 @@
         header('Location: logout.php');
         exit();
     }
+    if (isset($_POST['backToPatientPHP'])){
+
+      unset($_SESSION['dataArray']);
+
+      exit('backToPatient');
+}
     //generate a random token of strings
     function generateTokenString(){
       $tokenLength = 25;
@@ -27,10 +33,15 @@
       $randString = $randString . date("Ymd");
       return $randString;
     }
+    if(!isset($_SESSION['dataArray'])){
+
+      $_SESSION['dataArray'] = array();
+    }
+
     $stringDate = "" . date("Y-m-d");
     $createToken = generateTokenString();
     $dataPresArray = array($_SESSION['user_id'],$_SESSION['patient_id'],date("Y-m-d"),generateTokenString(),"NOT COLLECTED");
-    $dataMedArray = array();
+    
 
     if (isset($_POST['drugNamePHP'])){
 
@@ -41,8 +52,9 @@
         $data = $connection->query("SELECT * FROM medicine WHERE name = '$drugName'");
         
         if($data->num_rows > 0){
+            global $medID;
             $row = $data->fetch_assoc();
-            $_SESSION['medicine_id'] = $row['medicine_id'];
+            $_SESSION['med_id'] = $row['medicine_id'];
             unset($_POST['drugNamePHP']);
             exit('found');
         }else{
@@ -52,10 +64,11 @@
 
         
       }
+      
 
       if (isset($_POST['submitPHP'])){
 
-        $drugID = $_SESSION['medicine_id']; 
+        $drugID = $_SESSION['med_id']; 
         $drugPres = $_POST['drugPrescriptionPHP'];
         $drugQuantity = $_POST['drugQuantityPHP'];
         $drugDose = $_POST['drugDosePHP'];
@@ -64,8 +77,8 @@
         $drugRoute = $_POST['drugRoutePHP'];
         $drugDuration = $_POST['drugDurationPHP'];
 
-        array_push($dataMedArray, array($drugID,$drugPres,$drugQuantity,$drugDose,$drugFrequency,$drugUOM,$drugRoute,$drugDuration));
-        
+        array_push($_SESSION['dataArray'], array($drugID,$drugPres,$drugQuantity,$drugDose,$drugFrequency,$drugUOM,$drugRoute,$drugDuration));
+
         unset($_POST['submitPHP']);
         exit('complete');
         
@@ -76,7 +89,38 @@
         $connection = new mysqli('localhost', 'root', '','testestdb');
 
         if($connection->query("INSERT INTO prescription(prescription_id, doctor_id, patient_id, pr_date, token_string, collection_status)
-        VALUES (NULL,$dataPresArray[0],$dataPresArray[1],STR_TO_DATE('$stringDate','%Y-%m-%d'),'$createToken','NOT COLLECTED')") === TRUE){
+        VALUES (NULL,$dataPresArray[0],$dataPresArray[1],STR_TO_DATE('$stringDate','%Y-%m-%d'),'$createToken','NOT COLLECTED')") === TRUE)
+        {
+          $data = $connection->query("SELECT * FROM prescription WHERE token_string = '$createToken'");
+
+          $dataMedArrayP = $_SESSION['dataArray'];
+          //get prescription_id from the one we just created
+          if($data->num_rows > 0){
+              $row = $data->fetch_assoc();
+              $presID = $row['prescription_id'];
+          }else{
+              exit('failed');
+          }
+          foreach($_SESSION['dataArray'] as $key=>$value){
+            $medIDSUBMIT = $value[0];
+            $drugPresSUBMIT = $value[1];
+            $qtySUBMIT = $value[2];
+            $doseSUBMIT = $value[3];
+            $freqSUBMIT = $value[4];
+            $UOMSUBMIT = $value[5];
+            $routeSUBMIT = $value[6];
+            $durationSUBMIT = $value[7];
+
+            if($connection->query("INSERT INTO prescriptionhasorder(prescription_order_id, prescription_id, medicine_id, drug_prescription, quantity, dose, frequency, UOM, Route, stop_after) 
+              VALUES (NULL,$presID,$medIDSUBMIT,'$drugPresSUBMIT',$qtySUBMIT,$doseSUBMIT,
+              '$freqSUBMIT','$UOMSUBMIT','$routeSUBMIT','$durationSUBMIT')") === TRUE){
+
+              }else{
+                exit('no exist' . sizeof($_SESSION['dataArray']));
+              }
+
+          }
+          unset($_SESSION['dataArray']);
           exit('submitted');
         }else{
           exit('failed');
@@ -113,18 +157,9 @@
         </ul>
     </nav>
 
-    <button type="button" class="back__button" id="backButton" ><a href="doctorHasPatient.php">Back</a></button>
+    <button type="button" class="back__button" id="backButton" >Back</button>
     <?php
 
-     
-
-      if(sizeof($dataMedArray) > 0){
-        for ($x = 0; $x < sizeof($dataMedArray); $x++) {
-          for ($y = 0; $y < sizeof($dataMedArray[$x]); $y++){
-            echo ("position " . $y . ":" . $dataMedArray[$x][$y] . "<br>");
-          }
-        }
-      }
       
       
     ?>
@@ -285,7 +320,34 @@
     var pos6 = 6;
     var pos7 = 7;
     var pos8 = 8;
-    
+
+    $("#backButton").on('click', function (){
+
+$.ajax(
+     {
+         url: 'doctorAddPres.php',
+         method: 'POST',
+         data:{
+          backToPatientPHP: 1
+         },
+         success: function(response){
+             $("#response").html(response);
+
+             if(response.indexOf('backToPatient') >= 0){
+
+                 window.location = 'doctorHasPatient.php';
+                 
+             }else{
+                 alert("Please try again");
+             }
+             
+
+             
+         },
+         dataType: 'text'
+     }
+);
+});
             $("#verifyButton").on('click', function (){
               var drugName = $("#drug--name").val();
               var drugQuantity = $("#drug--quantity").val();
@@ -351,7 +413,7 @@
                             if(response.indexOf('submitted') >= 0){
                                 
                                 alert("Prescription Successfully created");
-                                
+                                window.location = 'doctorHasPatient.php';
                             }else{
                                 alert("Failed!");
                             }

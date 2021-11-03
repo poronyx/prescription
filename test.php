@@ -9,19 +9,36 @@
 <body>
 <button id="modal-btn" class="button">Click Here</button>
 <?php
+  $to = "por_-_@hotmail.com";
+  $subject = "My subject";
+  $txt = "Hello world!";
+  $headers = "From: poronyx@gmail.com" ;
+  
+  mail($to,$subject,$txt,$headers);
+  
   $dataArray = array();
-  $dataArray[0] = array(1,2,3,4);
-  $dataArray[1] = array(1,2,3,4);
-  $dataArray[2] = array(412,5,231,7);
+
   array_push($dataArray, array(123,3213,412));
 
-  echo (sizeof($dataArray[3]));
+  $_SESSION['array'] = array();
+
+  array_push($_SESSION['array'], array(512515,51253,4));
+  array_push($_SESSION['array'], array(515,5515153,12124));
+
+  $newArray = $_SESSION['array'];
+
+
+  foreach($newArray as $key=>$value){
+    echo($value[0] . '<br>');
+    echo($value[1] . '<br>');
+    echo($value[2] . '<br>');
+  }
   
-  echo("<br>");
+  echo(sizeof($newArray). " hi <br>");
   for ($x = 0; $x < sizeof($dataArray); $x++) {
-    for ($y = 0; $y < sizeof($dataArray[$x]); $y++){
-      echo ("position " . $y . ":" . $dataArray[$x][$y] . "<br>");
-    }
+    echo($dataArray[$x][0] . "<br>");
+    echo($dataArray[$x][1]. "<br>");
+    echo($dataArray[$x][2]. "<br>");
   }
   $todayDate = date('Y-m-d');
   $stringDate = strtotime($todayDate);
