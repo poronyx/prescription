@@ -37,6 +37,33 @@
         
         exit('adding');
 }
+    if (isset($_POST['view'])){
+
+        $_SESSION['pres_id'] = $_POST['viewPresIDPHP'];
+
+        exit('viewSuccess');
+    }
+    if (isset($_POST['search'])){
+
+        $connection = new mysqli('localhost', 'root', '','testestdb');
+        $searchString = $_POST['searchPresPHP'];
+
+        $data = $connection->query("SELECT * FROM prescription WHERE token_string = '$searchString'");
+        if($data->num_rows > 0){
+          $row = $data->fetch_assoc();
+          $status = $row['collection_status'];
+          $patientID = $_SESSION['patient_id'];
+          $patientDataID = $row['patient_id'];
+          if($status === 'NOT COLLECTED' && $patientID."" === $patientDataID.""){
+            $_SESSION['pres_id'] = $row['prescription_id'];
+            exit('searchComplete');
+          }else{
+            exit($doctorID . "   " . $doctDataID);
+          }
+        }else{
+            exit($searchString);
+        }
+    }
     
 ?>
 <html lang="en">
@@ -84,22 +111,51 @@
 
             $("#addPrescriptionButton").on('click', function (){
 
+                $.ajax(
+                {
+                    url: 'doctorHasPatient.php',
+                    method: 'POST',
+                    data:{
+                        add: 1
+                    },
+                    success: function(response){
+                        $("#response").html(response);
+
+                        if(response.indexOf('adding') >= 0){
+
+                             window.location = 'doctorAddPres.php';
+                 
+                        }else{
+                            alert("Please try again");
+                        }
+             
+
+             
+                    },
+                    dataType: 'text'
+                    }
+                );
+            });
+
+            $("#searchPrescriptionButton").on('click', function (){
+                var searchPres = $("#searchPrescription").val();
                $.ajax(
                     {
                         url: 'doctorHasPatient.php',
                         method: 'POST',
                         data:{
-                            add: 1
+                            search: 1,
+                            searchPresPHP: searchPres
                         },
                         success: function(response){
                             $("#response").html(response);
 
-                            if(response.indexOf('adding') >= 0){
+                            if(response.indexOf('searchComplete') >= 0){
 
-                                window.location = 'doctorAddPres.php';
+                                window.location = 'doctorViewPrescription.php';
                                 
                             }else{
-                                alert("Please try again");
+                                alert("Search failed!");
                             }
                             
 
@@ -109,6 +165,36 @@
                     }
                );
             });
+            $(".view__button--prescription").on('click', function (event){  
+                var buttonClicked = event.target.id ;  
+                var viewPresID = $("#"+buttonClicked).val();
+                console.log(viewPresID);
+            $.ajax(
+     {
+         url: 'doctorHasPatient.php',
+         method: 'POST',
+         data:{
+             view: 1,
+             viewPresIDPHP: viewPresID
+         },
+         success: function(response){
+             $("#response").html(response);
+
+             if(response.indexOf('viewSuccess') >= 0){
+
+                window.location = 'doctorViewPrescription.php';
+                 
+             }else{
+                 alert("No results");
+             }
+             
+
+             
+         },
+         dataType: 'text'
+     }
+);
+});
                 
         });
 
@@ -125,47 +211,47 @@
         </ul>
     </nav>
 
-    
+    <button type="button" class="back__button" id="backButton">Back</button>
     <div class="container">
         
 
         <div class="container__patient_details">
-            <button type="button" class="back__button" id="backButton">Back</button>
-            <h2 > ID = <?php echo("{$_SESSION['patient_id']}"); ?> </h2>
-            <h2 > Name = <?php echo("{$_SESSION['patient_name']}"); ?> </h2>
-            <h2 > DOB[YYYY/MM/DD] = <?php echo("{$_SESSION['patient_DOB']}"); ?> </h2>
-            <h2 > Email = <?php echo("{$_SESSION['patient_email']}"); ?> </h2>
-            <h2 > Phone = <?php echo("{$_SESSION['patient_phone']}"); ?> </h2>
-            <h2 > Weight(kg) = <?php echo("{$_SESSION['patient_weight']}"); ?> </h2>
-            <h2 > Height(cm) = <?php echo("{$_SESSION['patient_height']}"); ?> </h2>
-            <h2 > Gender = <?php echo("{$_SESSION['patient_gender']}"); ?> </h2>
-            <h2 > Address = <?php echo("{$_SESSION['patient_address']}"); ?> </h2>
-            <h2 > Allergy = <?php echo("{$_SESSION['patient_allergy']}"); ?> </h2>
+            
+            <h2 > Name : <?php echo("{$_SESSION['patient_name']}"); ?> </h2>
+            <h2 > DOB : <?php echo("{$_SESSION['patient_DOB']}"); ?> </h2>
+            <h2 > Email : <?php echo("{$_SESSION['patient_email']}"); ?> </h2>
+            <h2 > Phone : <?php echo("{$_SESSION['patient_phone']}"); ?> </h2>
+            <h2 > Weight(kg) : <?php echo("{$_SESSION['patient_weight']}"); ?> </h2>
+            <h2 > Height(cm) : <?php echo("{$_SESSION['patient_height']}"); ?> </h2>
+            <h2 > Gender : <?php echo("{$_SESSION['patient_gender']}"); ?> </h2>
+            <h2 > Address : <?php echo("{$_SESSION['patient_address']}"); ?> </h2>
+            <h2 > Allergy : <?php echo("{$_SESSION['patient_allergy']}"); ?> </h2>
         </div>
         <div class="container__patient_prescription">
-            <input type="text" name="searchPrescirptionBox" class="search__prescription" placeholder="Search prescription...">
             <button type="button" class="add__button--prescription" id="addPrescriptionButton">Add Prescription</button>
+            <input type="text" name="searchPrescirptionBox" class="search__prescription" id="searchPrescription"placeholder="Search prescription...">
+            <button type="button" class="search__button--prescription" id="searchPrescriptionButton">Search</button>
             <table>
                 <th>Date</th>
                 <th>Prescription ID</th>
                 <th>Requested By</th>
+                <th></th>
             <?php
                 $connection = new mysqli('localhost', 'root', '','testestdb');
                 $patient_id = $_SESSION['patient_id'];
 
-                $data = $connection->query("SELECT
-                user.name,
-                prescription.token_string,
-                prescription.pr_date
-              FROM user
-              JOIN doctor
-                ON user.user_id = doctor.user_id
-              JOIN prescription
-                ON patient_id = $patient_id");
-                
+                $data = $connection->query("SELECT * from prescription WHERE patient_id = $patient_id");
+                $count = 0;
                 if($data->num_rows > 0){
+                    
                     while($row = $data->fetch_assoc()){
-                        echo "<tr><td>" . $row['pr_date'] . "</td><td>" . $row['token_string'] . "</td><td>" . $row['name'] . "</td></tr>";
+                        $doctID = $row['doctor_id'];
+                        $data2 = $connection->query("SELECT * from user, doctor WHERE doctor.doctor_id = $doctID AND doctor.user_id = user.user_id");
+                        while($row2 = $data2->fetch_assoc()){
+                        echo "<tr><td>" . $row['pr_date'] . "</td><td>" . $row['token_string'] . "</td><td>".  $row2['name'] . "</td><td>".
+                        "<button type='button' class='view__button--prescription' id='viewPrescriptionButton".$count."' value='".$row['prescription_id']."'>View</button></td></tr>";
+                        $count = $count + 1;
+                        }
                     }
                     echo"</table>";
                 }else{

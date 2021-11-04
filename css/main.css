@@ -49,6 +49,11 @@ nav li a:hover{
     width: 40%;
 }
 
+.container__view_prescription{
+  padding: 2rem;
+    width: 95%;
+} 
+
 .container__patient_prescription{
     padding: 2rem;
     width: 60%;
@@ -85,6 +90,19 @@ nav li a:hover{
     
 }
 
+.search__button--prescription{
+    width: 25%;
+    min-width: 8rem;
+    padding: 1rem 1rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color:floralwhite;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    background:  rgb(51, 102, 153);
+}
+
 .search__button{
     width: 10%;
     min-width: 8rem;
@@ -98,17 +116,30 @@ nav li a:hover{
     background:  rgb(51, 102, 153);
 }
 
-.add__button--prescription{
-    width: 25%;
+.edit__button{
+    width: 10%;
     min-width: 8rem;
-    padding: 1rem 1rem;
+    padding: 1rem 2rem;
     font-weight: bold;
     font-size: 0.9rem;
     color:floralwhite;
     border-radius: 4px;
     outline: none;
     cursor: pointer;
-    background:  rgb(51, 102, 153);
+    background:  black;
+}
+
+.add__button--prescription{
+    width: 40%;
+    min-width: 8rem;
+    padding: 1rem 1rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color:floralwhite;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    background:  black;
 }
 .add__button--medicine{
     width: 15%;
@@ -122,10 +153,10 @@ nav li a:hover{
     cursor: pointer;
     background:  rgb(51, 102, 153);
 }
-.search__button:hover ,.add__button--prescription:hover,.add__button--medicine:hover{
+.search__button:hover ,.search__button--prescription:hover,.add__button--medicine:hover{
     background: rgb(26, 15, 85);
 }
-.search__button:active, .add__button--prescription:active, .add__button--medicine:active, .medicine__button{
+.search__button:active, .search__button--prescription:active, .add__button--medicine:active, .medicine__button{
     transform: scale(0.98);
 }
 table{
@@ -144,7 +175,9 @@ th{
 .form__title {
     font: 500 1rem 'Quicksand', sans-serif;
 }
-
+.view__button--prescription{
+  padding-left: 0.6rem;
+}
 :root {
     --modal-duration: 0.5s;
     --modal-color: rgb(32, 64, 96);

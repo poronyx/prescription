@@ -9,13 +9,23 @@
 <body>
 <button id="modal-btn" class="button">Click Here</button>
 <?php
+  
   $to = "por_-_@hotmail.com";
-  $subject = "My subject";
-  $txt = "Hello world!";
-  $headers = "From: poronyx@gmail.com" ;
-  
-  mail($to,$subject,$txt,$headers);
-  
+  $subject = "Token String for prescription";
+  $txt = "Hello " . $patientName .", your prescription string is:/n". $tokenString;
+  $headers = "From: theintern2021@yahoo.com" ;
+  //mail($to,$subject,$txt,$headers);
+
+  function sendMail($patientName,$tokenString,$email): void{
+    $to = $email;
+    $subject = "Token String for prescription";
+    $txt = "Hello " . $patientName .", your prescription string is:\n". $tokenString;
+    $headers = "From: theintern2021@yahoo.com" ;
+    mail($to,$subject,$txt,$headers);
+  }
+
+  sendMail("Somphon","hahahaha","por_-_@hotmail.com");
+
   $dataArray = array();
 
   array_push($dataArray, array(123,3213,412));

@@ -11,6 +11,12 @@
         header('Location: logout.php');
         exit();
     }
+    $connection = new mysqli('localhost', 'root', '','testestdb');
+    $user_id = $_SESSION['user_id'];
+    $data2 = $connection->query("SELECT * FROM doctor WHERE user_id = $user_id");
+    $row2 = $data2->fetch_assoc();
+    $_SESSION['doctor_id'] = $row2['doctor_id'];
+
     if (isset($_POST['searched'])){
         $connection = new mysqli('localhost', 'root', '','testestdb');
 
