@@ -48,13 +48,12 @@
         $connection = new mysqli('localhost', 'root', '','testestdb');
         $searchString = $_POST['searchPresPHP'];
 
-        $data = $connection->query("SELECT * FROM prescription WHERE token_string = '$searchString'");
+        $data = $connection->query("SELECT * FROM prescription WHERE token_string = '$searchString' ");
         if($data->num_rows > 0){
           $row = $data->fetch_assoc();
-          $status = $row['collection_status'];
           $patientID = $_SESSION['patient_id'];
           $patientDataID = $row['patient_id'];
-          if($status === 'NOT COLLECTED' && $patientID."" === $patientDataID.""){
+          if($patientID."" === $patientDataID.""){
             $_SESSION['pres_id'] = $row['prescription_id'];
             exit('searchComplete');
           }else{
@@ -240,7 +239,7 @@
                 $connection = new mysqli('localhost', 'root', '','testestdb');
                 $patient_id = $_SESSION['patient_id'];
 
-                $data = $connection->query("SELECT * from prescription WHERE patient_id = $patient_id");
+                $data = $connection->query("SELECT * from prescription WHERE patient_id = $patient_id ORDER BY prescription.prescription_id DESC");
                 $count = 0;
                 if($data->num_rows > 0){
                     
@@ -248,7 +247,7 @@
                         $doctID = $row['doctor_id'];
                         $data2 = $connection->query("SELECT * from user, doctor WHERE doctor.doctor_id = $doctID AND doctor.user_id = user.user_id");
                         while($row2 = $data2->fetch_assoc()){
-                        echo "<tr><td>" . $row['pr_date'] . "</td><td>" . $row['token_string'] . "</td><td>".  $row2['name'] . "</td><td>".
+                        echo "<tr><td>" . $row['pr_date'] . "</td><td>" . $row['token_string'] . "</td><td>Dr.".  $row2['name'] . "</td><td>".
                         "<button type='button' class='view__button--prescription' id='viewPrescriptionButton".$count."' value='".$row['prescription_id']."'>View</button></td></tr>";
                         $count = $count + 1;
                         }

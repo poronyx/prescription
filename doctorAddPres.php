@@ -84,7 +84,7 @@
         $drugRoute = $_POST['drugRoutePHP'];
         $drugDuration = $_POST['drugDurationPHP'];
 
-        array_push($_SESSION['dataArray'], array($drugID,$drugPres,$drugDose,$drugFrequency,$drugUOM,$drugRoute,$drugDuration));
+        array_push($_SESSION['dataArray'], array($drugID,$drugDose,$drugUOM,$drugFrequency,$drugRoute,$drugDuration,$drugPres));
 
         unset($_POST['submitPHP']);
         exit('complete');
@@ -118,12 +118,12 @@
           }
           foreach($_SESSION['dataArray'] as $key=>$value){
             $medIDSUBMIT = $value[0];
-            $drugPresSUBMIT = $value[1];
-            $doseSUBMIT = $value[2];
+            $doseSUBMIT = $value[1];
+            $UOMSUBMIT = $value[2];
             $freqSUBMIT = $value[3];
-            $UOMSUBMIT = $value[4];
-            $routeSUBMIT = $value[5];
-            $durationSUBMIT = $value[6];
+            $routeSUBMIT = $value[4];
+            $durationSUBMIT = $value[5];
+            $drugPresSUBMIT = $value[6];
 
             if($connection->query("INSERT INTO prescriptionhasorder(prescription_order_id, prescription_id, medicine_id, drug_prescription, quantity, dose, frequency, UOM, Route, stop_after) 
               VALUES (NULL,$presID,$medIDSUBMIT,'$drugPresSUBMIT',0,$doseSUBMIT,
@@ -179,13 +179,13 @@
         <div class="container__add_prescription">
             <button type="button" class="add__button--medicine" id="addButtonModal">Add Medicine</button>
             <table class = "table__add">
-                <th>Dose</th>
                 <th>Name</th>
-                <th>Drug Prescription</th>
-                <th>Frequency</th>
+                <th>Dose</th>
                 <th>UOM</th>
+                <th>Frequency</th>
                 <th>Route</th>
                 <th>Duration</th> 
+                <th>Special instruction</th>
                 <tr>
                     <td><input class = "td__box" id ="td1" disabled></input></td><td><input class = "td__box" id ="td2" disabled></input></td>
                     <td><input class = "td__box" id ="td3" disabled></input></td><td><input class = "td__box" id ="td4" disabled></input></td>
@@ -266,21 +266,21 @@
         <div class="box1">
             <div class="input__Text">Name : </div>
             <div class="input__Text">Dose : </div>
-            <div class="input__Text">Drug Prescription : </div>
-            <div class="input__Text">Frequency : </div>
             <div class="input__Text">UOM : </div>
+            <div class="input__Text">Frequency : </div>
             <div class="input__Text">Route : </div>
             <div class="input__Text">Duration : </div>
+            <div class="input__Text">Special instruction : </div>
         </div>
         <div class="box2">
             <form method="POST">    
               <input type="text" name="medicineBox" class="medicine__input" id="drug--name"required="required">
               <input type="number" min ="1" step="1" pattern="\d+" name="medicineBox" class="medicine__input" id="drug--dose"required="required">
-              <input type="text" name="medicineBox" class="medicine__input" id="drug--prescription"required="required">
-              <input type="text" name="medicineBox" class="medicine__input" id="drug--frequency"required="required">
               <input type="text" name="medicineBox" class="medicine__input" id="drug--UOM"required="required">
+              <input type="text" name="medicineBox" class="medicine__input" id="drug--frequency"required="required">
               <input type="text" name="medicineBox" class="medicine__input" id="drug--route"required="required">
               <input type="text" name="medicineBox" class="medicine__input" id="drug--duration"required="required">
+              <input type="text" name="medicineBox" class="medicine__input" id="drug--prescription"required="required">
             </form>
         </div>
       </div>
@@ -484,12 +484,12 @@ $.ajax(
                                 alert("Submitted successfully!!");
                                 if(count == 0){
                                   document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugName;
-                                  document.getElementById("td" + pos3).value = drugPrescription;
+                                  document.getElementById("td" + pos2).value = drugUOM;
+                                  document.getElementById("td" + pos3).value = drugName;
                                   document.getElementById("td" + pos4).value = drugFrequency;
-                                  document.getElementById("td" + pos5).value = drugUOM;
-                                  document.getElementById("td" + pos6).value = drugRoute;
-                                  document.getElementById("td" + pos7).value = drugDuration;
+                                  document.getElementById("td" + pos5).value = drugRoute;
+                                  document.getElementById("td" + pos6).value = drugDuration;
+                                  document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else{
                                   pos1 = pos1 + 7;
@@ -501,84 +501,84 @@ $.ajax(
                                   pos7 = pos7 + 7;
                                 if(count == 1){
                                   document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugName;
-                                  document.getElementById("td" + pos3).value = drugPrescription;
+                                  document.getElementById("td" + pos2).value = drugUOM;
+                                  document.getElementById("td" + pos3).value = drugName;
                                   document.getElementById("td" + pos4).value = drugFrequency;
-                                  document.getElementById("td" + pos5).value = drugUOM;
-                                  document.getElementById("td" + pos6).value = drugRoute;
-                                  document.getElementById("td" + pos7).value = drugDuration;
+                                  document.getElementById("td" + pos5).value = drugRoute;
+                                  document.getElementById("td" + pos6).value = drugDuration;
+                                  document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 2){
                                   document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugName;
-                                  document.getElementById("td" + pos3).value = drugPrescription;
+                                  document.getElementById("td" + pos2).value = drugUOM;
+                                  document.getElementById("td" + pos3).value = drugName;
                                   document.getElementById("td" + pos4).value = drugFrequency;
-                                  document.getElementById("td" + pos5).value = drugUOM;
-                                  document.getElementById("td" + pos6).value = drugRoute;
-                                  document.getElementById("td" + pos7).value = drugDuration;
+                                  document.getElementById("td" + pos5).value = drugRoute;
+                                  document.getElementById("td" + pos6).value = drugDuration;
+                                  document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 3){
                                   document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugName;
-                                  document.getElementById("td" + pos3).value = drugPrescription;
+                                  document.getElementById("td" + pos2).value = drugUOM;
+                                  document.getElementById("td" + pos3).value = drugName;
                                   document.getElementById("td" + pos4).value = drugFrequency;
-                                  document.getElementById("td" + pos5).value = drugUOM;
-                                  document.getElementById("td" + pos6).value = drugRoute;
-                                  document.getElementById("td" + pos7).value = drugDuration;
+                                  document.getElementById("td" + pos5).value = drugRoute;
+                                  document.getElementById("td" + pos6).value = drugDuration;
+                                  document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 4){
                                   document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugName;
-                                  document.getElementById("td" + pos3).value = drugPrescription;
+                                  document.getElementById("td" + pos2).value = drugUOM;
+                                  document.getElementById("td" + pos3).value = drugName;
                                   document.getElementById("td" + pos4).value = drugFrequency;
-                                  document.getElementById("td" + pos5).value = drugUOM;
-                                  document.getElementById("td" + pos6).value = drugRoute;
-                                  document.getElementById("td" + pos7).value = drugDuration;
+                                  document.getElementById("td" + pos5).value = drugRoute;
+                                  document.getElementById("td" + pos6).value = drugDuration;
+                                  document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 5){
                                   document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugName;
-                                  document.getElementById("td" + pos3).value = drugPrescription;
+                                  document.getElementById("td" + pos2).value = drugUOM;
+                                  document.getElementById("td" + pos3).value = drugName;
                                   document.getElementById("td" + pos4).value = drugFrequency;
-                                  document.getElementById("td" + pos5).value = drugUOM;
-                                  document.getElementById("td" + pos6).value = drugRoute;
-                                  document.getElementById("td" + pos7).value = drugDuration;
+                                  document.getElementById("td" + pos5).value = drugRoute;
+                                  document.getElementById("td" + pos6).value = drugDuration;
+                                  document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 6){
                                   document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugName;
-                                  document.getElementById("td" + pos3).value = drugPrescription;
+                                  document.getElementById("td" + pos2).value = drugUOM;
+                                  document.getElementById("td" + pos3).value = drugName;
                                   document.getElementById("td" + pos4).value = drugFrequency;
-                                  document.getElementById("td" + pos5).value = drugUOM;
-                                  document.getElementById("td" + pos6).value = drugRoute;
-                                  document.getElementById("td" + pos7).value = drugDuration;
+                                  document.getElementById("td" + pos5).value = drugRoute;
+                                  document.getElementById("td" + pos6).value = drugDuration;
+                                  document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 7){
                                   document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugName;
-                                  document.getElementById("td" + pos3).value = drugPrescription;
+                                  document.getElementById("td" + pos2).value = drugUOM;
+                                  document.getElementById("td" + pos3).value = drugName;
                                   document.getElementById("td" + pos4).value = drugFrequency;
-                                  document.getElementById("td" + pos5).value = drugUOM;
-                                  document.getElementById("td" + pos6).value = drugRoute;
-                                  document.getElementById("td" + pos7).value = drugDuration;
+                                  document.getElementById("td" + pos5).value = drugRoute;
+                                  document.getElementById("td" + pos6).value = drugDuration;
+                                  document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 8){
                                   document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugName;
-                                  document.getElementById("td" + pos3).value = drugPrescription;
+                                  document.getElementById("td" + pos2).value = drugUOM;
+                                  document.getElementById("td" + pos3).value = drugName;
                                   document.getElementById("td" + pos4).value = drugFrequency;
-                                  document.getElementById("td" + pos5).value = drugUOM;
-                                  document.getElementById("td" + pos6).value = drugRoute;
-                                  document.getElementById("td" + pos7).value = drugDuration;
+                                  document.getElementById("td" + pos5).value = drugRoute;
+                                  document.getElementById("td" + pos6).value = drugDuration;
+                                  document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 9){
                                   document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugName;
-                                  document.getElementById("td" + pos3).value = drugPrescription;
+                                  document.getElementById("td" + pos2).value = drugUOM;
+                                  document.getElementById("td" + pos3).value = drugName;
                                   document.getElementById("td" + pos4).value = drugFrequency;
-                                  document.getElementById("td" + pos5).value = drugUOM;
-                                  document.getElementById("td" + pos6).value = drugRoute;
-                                  document.getElementById("td" + pos7).value = drugDuration;
+                                  document.getElementById("td" + pos5).value = drugRoute;
+                                  document.getElementById("td" + pos6).value = drugDuration;
+                                  document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }
                               }

@@ -170,21 +170,21 @@
         <div class="box1">
             <div class="input__Text">Name : </div>
             <div class="input__Text">Dose : </div>
-            <div class="input__Text">Drug Prescription : </div>
-            <div class="input__Text">Frequency : </div>
             <div class="input__Text">UOM : </div>
+            <div class="input__Text">Frequency : </div>
             <div class="input__Text">Route : </div>
             <div class="input__Text">Duration : </div>
+            <div class="input__Text">Special instruction : </div>
         </div>
         <div class="box2">
             <form method="POST">    
               <input type="text" name="medicineBox" class="medicine__input" id="drug--name"required="required" disabled <?php echo"value='$name'"?>>
               <input type="number" min ="1" step="1" pattern="\d+" name="medicineBox" class="medicine__input" id="drug--dose"required="required" <?php echo"value='$dose'"?>>
-              <input type="text" name="medicineBox" class="medicine__input" id="drug--prescription"required="required"<?php echo"value='$drugPres'"?>>
-              <input type="text" name="medicineBox" class="medicine__input" id="drug--frequency"required="required"<?php echo"value='$freq'"?>>
               <input type="text" name="medicineBox" class="medicine__input" id="drug--UOM"required="required"<?php echo"value='$UOM'"?>>
+              <input type="text" name="medicineBox" class="medicine__input" id="drug--frequency"required="required"<?php echo"value='$freq'"?>>
               <input type="text" name="medicineBox" class="medicine__input" id="drug--route"required="required"<?php echo"value='$route'"?>>
               <input type="text" name="medicineBox" class="medicine__input" id="drug--duration"required="required"<?php echo"value='$duration'"?>>
+              <input type="text" name="medicineBox" class="medicine__input" id="drug--prescription"required="required"<?php echo"value='$drugPres'"?>>
               
             </form>
             <button id="submitButton" class="edit__button" type="button" >Submit</button>

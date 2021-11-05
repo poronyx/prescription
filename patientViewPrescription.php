@@ -8,13 +8,7 @@
     }
     
     //logs out if tried to visit from wrong userType
-    if($_SESSION['userType'] != "doctor"){
-        header('Location: logout.php');
-        exit();
-    }
-    //logs out if tried to visit before searching for patient
-    if (!isset($_SESSION['patient_id'])){
-        
+    if($_SESSION['userType'] != "patient"){
         header('Location: logout.php');
         exit();
     }
@@ -24,11 +18,6 @@
             
             exit('back');
     }
-
-    if (isset($_POST['edit'])){
-        $_SESSION['edit_id'] = $_POST['editPresIDPHP']; 
-        exit('editSuccess');
-}
     
 ?>
 <html lang="en">
@@ -36,7 +25,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor</title>
+    <title>Patient</title>
     <link rel="stylesheet" href=".\css\main.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -44,13 +33,13 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            console.log('page ready: DoctorHasPatient');
+            console.log('page ready: patientViewPrescription');
 
             $("#backButton").on('click', function (){
 
                $.ajax(
                     {
-                        url: 'doctorViewPrescription.php',
+                        url: 'patientViewPrescription.php',
                         method: 'POST',
                         data:{
                             back: 1
@@ -60,7 +49,7 @@
 
                             if(response.indexOf('back') >= 0){
 
-                                window.location = 'doctorHasPatient.php';
+                                window.location = 'patientHome.php';
                                 
                             }else{
                                 alert("Please try again");
@@ -72,36 +61,7 @@
                );
             });
 
-            $(".edit__button--prescription").on('click', function (event){  
-                var buttonClicked = event.target.id ;  
-                var editPresID = $("#"+buttonClicked).val();
-                console.log(editPresID);
-            $.ajax(
-     {
-         url: 'doctorViewPrescription.php',
-         method: 'POST',
-         data:{
-             edit: 1,
-             editPresIDPHP: editPresID
-         },
-         success: function(response){
-             $("#response").html(response);
-
-             if(response.indexOf('editSuccess') >= 0){
-
-                window.location = 'doctorEditPrescription.php';
-                 
-             }else{
-                 alert("Please try again");
-             }
-             
-
-             
-         },
-         dataType: 'text'
-     }
-);
-});
+            
                 
         });
 
@@ -111,8 +71,7 @@
 </head>
 <body>
     <nav>
-        <img src="img\doctor.png" alt="doctor" style="width:7%">
-        <div class="nav__name"><h2>Dr. <?php echo("{$_SESSION['name']}"); ?></h2></div>
+        <img src="img\patient.png" alt="patient" style="width:7%">
         <ul>
             <li><a href="logout.php">Log out</a></li>
         </ul>
@@ -154,12 +113,9 @@
                                 echo "<tr><td>" . $row2['name'] ."</td><td>" . $row['dose']  .
                                 "</td><td>" .  $row['UOM'] ."</td><td>". $row['frequency'] ."</td><td>" .$row['Route'] ."</td><td>" .
                                 $row['stop_after']  ."</td><td>" .$row['drug_prescription']."<td>";
-                                    if($row3['collection_status'] === 'NOT COLLECTED' && $row3['doctor_id'] === $_SESSION['doctor_id']){
-                                        echo "<button type='button' class='edit__button--prescription' id='editPrescriptionButton".$count
-                                        ."' value='".$row['prescription_order_id']."'>Edit</button></td></td></tr>" ;
-                                    }else{
-                                        echo "</td></td></tr>" ;
-                                    }
+                                    
+                                echo "</td></td></tr>" ;
+                                   
                                 
                          
                                 
