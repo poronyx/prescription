@@ -483,9 +483,9 @@ $.ajax(
                                 document.getElementById("submitButton").disabled = true;
                                 alert("Submitted successfully!!");
                                 if(count == 0){
-                                  document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugUOM;
-                                  document.getElementById("td" + pos3).value = drugName;
+                                  document.getElementById("td" + pos1).value = drugName;
+                                  document.getElementById("td" + pos2).value = drugDose;
+                                  document.getElementById("td" + pos3).value = drugUOM;
                                   document.getElementById("td" + pos4).value = drugFrequency;
                                   document.getElementById("td" + pos5).value = drugRoute;
                                   document.getElementById("td" + pos6).value = drugDuration;
@@ -500,81 +500,81 @@ $.ajax(
                                   pos6 = pos6 + 7;
                                   pos7 = pos7 + 7;
                                 if(count == 1){
-                                  document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugUOM;
-                                  document.getElementById("td" + pos3).value = drugName;
+                                  document.getElementById("td" + pos1).value = drugName;
+                                  document.getElementById("td" + pos2).value = drugDose;
+                                  document.getElementById("td" + pos3).value = drugUOM;
                                   document.getElementById("td" + pos4).value = drugFrequency;
                                   document.getElementById("td" + pos5).value = drugRoute;
                                   document.getElementById("td" + pos6).value = drugDuration;
                                   document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 2){
-                                  document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugUOM;
-                                  document.getElementById("td" + pos3).value = drugName;
+                                  document.getElementById("td" + pos1).value = drugName;
+                                  document.getElementById("td" + pos2).value = drugDose;
+                                  document.getElementById("td" + pos3).value = drugUOM;
                                   document.getElementById("td" + pos4).value = drugFrequency;
                                   document.getElementById("td" + pos5).value = drugRoute;
                                   document.getElementById("td" + pos6).value = drugDuration;
                                   document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 3){
-                                  document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugUOM;
-                                  document.getElementById("td" + pos3).value = drugName;
+                                  document.getElementById("td" + pos1).value = drugName;
+                                  document.getElementById("td" + pos2).value = drugDose;
+                                  document.getElementById("td" + pos3).value = drugUOM;
                                   document.getElementById("td" + pos4).value = drugFrequency;
                                   document.getElementById("td" + pos5).value = drugRoute;
                                   document.getElementById("td" + pos6).value = drugDuration;
                                   document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 4){
-                                  document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugUOM;
-                                  document.getElementById("td" + pos3).value = drugName;
+                                  document.getElementById("td" + pos1).value = drugName;
+                                  document.getElementById("td" + pos2).value = drugDose;
+                                  document.getElementById("td" + pos3).value = drugUOM;
                                   document.getElementById("td" + pos4).value = drugFrequency;
                                   document.getElementById("td" + pos5).value = drugRoute;
                                   document.getElementById("td" + pos6).value = drugDuration;
                                   document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 5){
-                                  document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugUOM;
-                                  document.getElementById("td" + pos3).value = drugName;
+                                  document.getElementById("td" + pos1).value = drugName;
+                                  document.getElementById("td" + pos2).value = drugDose;
+                                  document.getElementById("td" + pos3).value = drugUOM;
                                   document.getElementById("td" + pos4).value = drugFrequency;
                                   document.getElementById("td" + pos5).value = drugRoute;
                                   document.getElementById("td" + pos6).value = drugDuration;
                                   document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 6){
-                                  document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugUOM;
-                                  document.getElementById("td" + pos3).value = drugName;
+                                  document.getElementById("td" + pos1).value = drugName;
+                                  document.getElementById("td" + pos2).value = drugDose;
+                                  document.getElementById("td" + pos3).value = drugUOM;
                                   document.getElementById("td" + pos4).value = drugFrequency;
                                   document.getElementById("td" + pos5).value = drugRoute;
                                   document.getElementById("td" + pos6).value = drugDuration;
                                   document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 7){
-                                  document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugUOM;
-                                  document.getElementById("td" + pos3).value = drugName;
+                                  document.getElementById("td" + pos1).value = drugName;
+                                  document.getElementById("td" + pos2).value = drugDose;
+                                  document.getElementById("td" + pos3).value = drugUOM;
                                   document.getElementById("td" + pos4).value = drugFrequency;
                                   document.getElementById("td" + pos5).value = drugRoute;
                                   document.getElementById("td" + pos6).value = drugDuration;
                                   document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 8){
-                                  document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugUOM;
-                                  document.getElementById("td" + pos3).value = drugName;
+                                  document.getElementById("td" + pos1).value = drugName;
+                                  document.getElementById("td" + pos2).value = drugDose;
+                                  document.getElementById("td" + pos3).value = drugUOM;
                                   document.getElementById("td" + pos4).value = drugFrequency;
                                   document.getElementById("td" + pos5).value = drugRoute;
                                   document.getElementById("td" + pos6).value = drugDuration;
                                   document.getElementById("td" + pos7).value = drugPrescription;
                                   count = count + 1;
                                 }else if(count == 9){
-                                  document.getElementById("td" + pos1).value = drugDose;
-                                  document.getElementById("td" + pos2).value = drugUOM;
-                                  document.getElementById("td" + pos3).value = drugName;
+                                  document.getElementById("td" + pos1).value = drugName;
+                                  document.getElementById("td" + pos2).value = drugDose;
+                                  document.getElementById("td" + pos3).value = drugUOM;
                                   document.getElementById("td" + pos4).value = drugFrequency;
                                   document.getElementById("td" + pos5).value = drugRoute;
                                   document.getElementById("td" + pos6).value = drugDuration;
