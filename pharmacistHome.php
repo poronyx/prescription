@@ -95,9 +95,9 @@
         <input type="text" name="searchBox" class="search__input" placeholder="Search prescription...">
         <button type="button" class="search__button" id="searchButton">Search</button>
     </div>
-   
-    
-    
+
+
+
     
 </body>
 </html>
